@@ -1,22 +1,14 @@
 import { expect } from '../../tests/_fixtures/fixtures';
 import { SUCCESS_CODE } from './constants/responceCodes';
-import { BaseAPI } from './BaseAPI';
+import { testStep } from '../common/helpers/pw';
 
-export class GoodsAPI extends BaseAPI {
+export class BaseAPI {
   constructor(request) {
-    super(request);
+    this.request = request;
   }
 
-  async getAllGoods() {
-    return await this.step(`GET all goods`, async () => {
-      return await this.request.get('/students-api/goods', {});
-    });
-  }
-
-  async getGoodById(id) {
-    return await this.step(`GET good by id`, async () => {
-      return await this.request.get(`/students-api/goods/${id}`, {});
-    });
+  async step(title, stepToRun) {
+    return await testStep(title, stepToRun);
   }
 
   parseStatus(response) {
